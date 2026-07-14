@@ -247,7 +247,7 @@ export default function Hero() {
       </div>
 
       {/* ─── HERO SECTION ─── */}
-      <section className="hero">
+      <section id="hero" className="hero">
         <span className="eyebrow">Every role, one dashboard</span>
 
         <h1 className="title">

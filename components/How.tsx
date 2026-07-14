@@ -21,7 +21,7 @@ export default function How() {
         </Reveal>
 
         <div className="relative mt-16 grid gap-8 lg:grid-cols-3">
-          <div className="absolute left-0 right-0 top-9 hidden h-px bg-gradient-to-r from-transparent via-gold to-transparent lg:block" />
+          <div className="absolute left-0 right-0 top-9 hidden h-px bg-gradient-to-r from-transparent via-accent-soft to-transparent lg:block" />
           {how.steps.map((s, i) => (
             <Reveal key={s.no} delay={i * 0.12}>
               <div className="relative">

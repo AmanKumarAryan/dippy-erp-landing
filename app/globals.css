@@ -8,6 +8,10 @@
   --foreground: #1E293B;
   --ink-soft: #64748B;
   --ink-mute: #94A3B8;
+  --accent: #7C3AED;
+  --accent-deep: #5B21B6;
+  --accent-soft: #EDE9FE;
+  --accent-400: #A855F7;
   --purple-400: #A855F7;
   --purple-500: #9333EA;
   --purple-600: #7C3AED;
@@ -36,6 +40,9 @@
   --color-foreground: var(--foreground);
   --color-ink-soft: var(--ink-soft);
   --color-ink-mute: var(--ink-mute);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
   --color-purple: var(--purple-600);
   --color-purple-400: var(--purple-400);
   --color-purple-700: var(--purple-700);
@@ -107,13 +114,13 @@ html.lenis body { height: auto; }
   will-change: transform;
 }
 
-/* ── Card surfaces (rounded, soft warm shadow) ── */
+/* ── Card surfaces (rounded, purple shadow) ── */
 .surface-card {
   background: var(--surface);
   border: 1px solid var(--line);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 24px 60px rgba(244, 104, 63, 0.08);
+    0 24px 60px rgba(124, 58, 237, 0.06);
 }
 
 .surface-card-2 {
@@ -121,19 +128,19 @@ html.lenis body { height: auto; }
   border: 1px solid var(--line-bright);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 16px 40px rgba(43, 182, 168, 0.07);
+    0 16px 40px rgba(124, 58, 237, 0.04);
 }
 
 /* ── Gradient text ── */
 .gradient-text {
-  background: linear-gradient(120deg, var(--accent-deep), var(--mint));
+  background: linear-gradient(120deg, var(--accent-deep), var(--accent-400));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .gradient-text-gold {
-  background: linear-gradient(120deg, var(--gold), var(--accent));
+  background: linear-gradient(120deg, var(--accent-400), var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -149,7 +156,7 @@ html.lenis body { height: auto; }
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, var(--accent), var(--mint));
+  background: linear-gradient(135deg, var(--accent), var(--accent-400));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -625,6 +632,27 @@ html.lenis body { height: auto; }
 .reveal {
   opacity: 0;
   transform: translateY(50px);
+}
+
+/* ── Gradient section divider ── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft), var(--accent), var(--accent-soft), transparent);
+  opacity: 0.5;
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+/* ── Subtle animated glow between sections ── */
+.section-glow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  max-width: 600px;
+  height: 200px;
+  background: radial-gradient(closest-side, rgba(124, 58, 237, 0.06), transparent 80%);
+  pointer-events: none;
 }
 
 /* ── Footer row ── */

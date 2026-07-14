@@ -2,11 +2,12 @@
 
 import { site } from "@/lib/site";
 import Reveal from "./Reveal";
+import CountUp from "./CountUp";
 
 export default function TrustNumbers() {
   const t = site.trust;
   return (
-    <section className="relative px-6 py-20">
+    <section id="trust" className="relative px-6 py-20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="gradient-border relative overflow-hidden rounded-[36px] bg-surface p-10 sm:p-14">
@@ -24,7 +25,7 @@ export default function TrustNumbers() {
               {t.stats.map((s) => (
                 <div key={s.label} className="text-center">
                   <div className="gradient-text-gold font-display text-4xl font-bold sm:text-5xl">
-                    {s.value}
+                    <CountUp end={parseInt(s.value.replace(/[,/]/g, ""))} suffix={s.value.replace(/[\d,]/g, "")} />
                   </div>
                   <div className="mt-2 text-sm text-ink-soft">{s.label}</div>
                 </div>

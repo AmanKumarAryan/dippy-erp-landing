@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import FloatingGuide from "@/components/FloatingGuide";
+import SideNavigator from "@/components/SideNavigator";
 
 export const metadata: Metadata = {
   title: "diPPy — One login for your whole school",
@@ -21,7 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script src="https://unpkg.com/@phosphor-icons/web"></script>
       </head>
       <body className="grain">
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          {children}
+          <SideNavigator />
+          <FloatingGuide />
+        </SmoothScroll>
       </body>
     </html>
   );

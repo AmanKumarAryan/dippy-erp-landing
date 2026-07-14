@@ -1,21 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Warm kawaii + professional palette ── */
-  --background: #FFFAF4;
-  --surface: #FFFFFF;
-  --surface-2: #FFF1E6;
-  --foreground: #3A322C;
-  --ink-soft: #7C7269;
-  --ink-mute: #B0A598;
-  --accent: #FF8A65;
-  --accent-deep: #F4683F;
-  --accent-soft: #FFC4B0;
-  --mint: #2BB6A8;
-  --mint-soft: #B8ECE7;
-  --gold: #F4C95D;
-  --line: rgba(58, 50, 44, 0.1);
-  --line-bright: rgba(58, 50, 44, 0.16);
+  /* ── Purple & White theme ── */
+  --background: #FFFFFF;
+  --surface: #F8FAFC;
+  --surface-2: #F1F5F9;
+  --foreground: #1E293B;
+  --ink-soft: #64748B;
+  --ink-mute: #94A3B8;
+  --purple-400: #A855F7;
+  --purple-500: #9333EA;
+  --purple-600: #7C3AED;
+  --purple-700: #6D28D9;
+  --purple-800: #5B21B6;
+  --purple-950: #2E1065;
+  --cyan-400: #38BDF8;
+  --cyan-600: #0284C7;
+  --cyan-800: #0369A1;
+  --blue-400: #60A5FA;
+  --blue-600: #2563EB;
+  --blue-800: #1E40AF;
+  --line: rgba(226, 232, 240, 0.8);
+  --line-bright: rgba(226, 232, 240, 1);
 
   /* Font families (loaded via <link> in layout, not next/font) */
   --font-space-grotesk: "Space Grotesk", ui-sans-serif, sans-serif;
@@ -30,12 +36,14 @@
   --color-foreground: var(--foreground);
   --color-ink-soft: var(--ink-soft);
   --color-ink-mute: var(--ink-mute);
-  --color-accent: var(--accent);
-  --color-accent-deep: var(--accent-deep);
-  --color-accent-soft: var(--accent-soft);
-  --color-cyan: var(--mint);
-  --color-cyan-soft: var(--mint-soft);
-  --color-gold: var(--gold);
+  --color-purple: var(--purple-600);
+  --color-purple-400: var(--purple-400);
+  --color-purple-700: var(--purple-700);
+  --color-blue: var(--blue-600);
+  --color-blue-400: var(--blue-400);
+  --color-blue-800: var(--blue-800);
+  --color-cyan: var(--cyan-400);
+  --color-cyan-600: var(--cyan-600);
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);

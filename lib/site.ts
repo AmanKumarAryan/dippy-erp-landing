@@ -1,6 +1,6 @@
 export const site = {
   brand: "diPPy",
-  tagline: "One login. Every role in your school, finally in sync.",
+  tagline: "Modern school ERP platform built for Indian schools",
   nav: [
     { label: "Problem", href: "#problem" },
     { label: "How it works", href: "#how" },
@@ -11,13 +11,13 @@ export const site = {
   ],
 
   hero: {
-    eyebrow: "MULTI-TENANT SCHOOL ERP · बना UP & BIHAR के लिए",
-    headline: "One login.",
-    headlineGradient: "Every role",
-    headlineEnd: "in your school, finally in sync.",
-    sub: "diPPy brings principals, teachers, students aur parents — sabko ek hi system pe laata hai. Attendance, fees, exams aur communication, bina kisi paperwork ya WhatsApp chaos ke.",
-    ctaPrimary: { label: "Book a free demo", href: "#contact" },
-    ctaSecondary: { label: "See how it works", href: "#how" },
+    eyebrow: "PURPLE & WHITE THEME",
+    headline: "Modern School ERP",
+    headlineGradient: "Built for Schools",
+    headlineEnd: "— Simple. Smart. Secure.",
+    sub: "diPPy brings principals, teachers, students and parents onto a single system — attendance, fees, exams and communication, without the paperwork or WhatsApp chaos.",
+    ctaPrimary: { label: "Book your demo", href: "#contact" },
+    ctaSecondary: { label: "See features", href: "#features" },
     stats: [
       { value: "4 roles", label: "One shared database" },
       { value: "1 login", label: "No more password juggling" },

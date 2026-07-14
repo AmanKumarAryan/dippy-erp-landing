@@ -1,24 +1,252 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function Hero() {
-  const waveRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Parallax effect for wave (same as senior's)
-    const handleScroll = () => {
-      if (waveRef.current) {
-        const scrollY = window.scrollY;
-        waveRef.current.style.transform = `translateY(${scrollY * 0.15}px)`;
+    if (typeof window === "undefined") return;
+    if (!gsap) return;
+
+    const ctx = gsap.context(() => {
+      // ─── INITIAL STATES ───
+      gsap.set(".eyebrow", { y: 12, opacity: 0 });
+      gsap.set(".title .word", { yPercent: 110, opacity: 0 });
+      gsap.set(".title-desc", { opacity: 0, x: -10 });
+      gsap.set(".future-tag", { opacity: 0, x: -10 });
+      gsap.set(".badge", { scale: 0, rotation: -90, opacity: 0 });
+      gsap.set(".res-item", { y: 16, opacity: 0 });
+      gsap.set(".wave-wrap", { x: 120, opacity: 0 });
+      gsap.set(".wave-glow", { opacity: 0 });
+      gsap.set(".bg-text", { opacity: 0, scale: 1.1 });
+
+      // ─── PAGE LOAD TIMELINE ───
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        delay: 0.15,
+      });
+
+      tl.to(".wave-glow", { opacity: 1, duration: 1.2 })
+        .to(
+          ".wave-wrap",
+          { x: 0, opacity: 1, duration: 1.4, ease: "power3.out" },
+          "-=1.2"
+        )
+        .to(
+          ".bg-text",
+          { opacity: 1, scale: 1, duration: 1.4, ease: "power3.out" },
+          "-=1.2"
+        )
+        .to(".eyebrow", { y: 0, opacity: 1, duration: 0.5 }, "-=1")
+        .to(
+          ".title .word",
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.9,
+            stagger: 0.05,
+            ease: "power4.out",
+          },
+          "-=.8"
+        )
+        .to(".title-desc", { x: 0, opacity: 1, duration: 0.6 }, "-=.5")
+        .to(".future-tag", { x: 0, opacity: 1, duration: 0.5 }, "-=.3")
+        .to(
+          ".badge",
+          {
+            scale: 1,
+            rotation: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+          },
+          "-=.5"
+        )
+        .to(
+          ".res-item",
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.08 },
+          "-=.4"
+        );
+
+      // ─── WAVE FLOAT (gentle continuous) ───
+      gsap.to(".wave-wrap", {
+        y: -18,
+        rotation: -1.2,
+        duration: 5.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+      gsap.to(".wave-glow", {
+        y: 12,
+        scale: 1.05,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+      gsap.to(".wave-glow.b", {
+        y: -16,
+        x: -10,
+        duration: 7,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      // Badge slow drift
+      gsap.to(".badge", {
+        y: "+=8",
+        duration: 3.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      // ─── SCROLL PARALLAX ───
+      gsap.to(".wave-wrap", {
+        scrollTrigger: {
+          trigger: pageRef.current,
+          start: "top top",
+          end: "+=1200",
+          scrub: 1.2,
+        },
+        y: -240,
+        rotation: 6,
+        scale: 1.08,
+      });
+      gsap.to(".bg-text", {
+        scrollTrigger: {
+          trigger: pageRef.current,
+          start: "top top",
+          end: "+=1000",
+          scrub: 1.2,
+        },
+        xPercent: -8,
+        opacity: 0.5,
+      });
+      gsap.to(".badge", {
+        scrollTrigger: {
+          trigger: pageRef.current,
+          start: "top top",
+          end: "+=800",
+          scrub: 1.5,
+        },
+        y: 80,
+        rotation: 30,
+      });
+
+      // ─── SCROLL REVEALS ───
+      gsap.utils.toArray(".reveal").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 50, opacity: 0 },
+          {
+            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+          }
+        );
+      });
+
+      // ─── INTERACTIVE: WAVE MOUSE PARALLAX ───
+      if (!window.matchMedia("(pointer: coarse)").matches) {
+        document.addEventListener("mousemove", (e) => {
+          const x = e.clientX / window.innerWidth - 0.5;
+          const y = e.clientY / window.innerHeight - 0.5;
+          gsap.to(".wave-wrap", {
+            x: x * 30,
+            duration: 1.2,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+          gsap.to(".wave-glow", {
+            x: x * 60,
+            y: y * 40,
+            duration: 1.4,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+          gsap.to(".badge", {
+            x: x * -16,
+            y: y * -10,
+            duration: 1.2,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+          gsap.to(".bg-text", {
+            x: x * -20,
+            duration: 1.4,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        });
       }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+      // ─── CARD HOVER MICRO ───
+      document.querySelectorAll(".clay-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          gsap.to(card, {
+            rotateY: x * 4,
+            rotateX: -y * 4,
+            duration: 0.5,
+            ease: "power2.out",
+            transformPerspective: 900,
+          });
+        });
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            rotateY: 0,
+            rotateX: 0,
+            duration: 0.7,
+            ease: "elastic.out(1,.6)",
+          });
+        });
+      });
+
+      // ─── RESOURCE LIST: change active on click ───
+      const resItems = document.querySelectorAll(".res-item");
+      resItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          resItems.forEach((r) => r.classList.remove("active"));
+          item.classList.add("active");
+        });
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <>
+    <div className="page" ref={pageRef}>
+      {/* ─── WAVE GLOW ORBS ─── */}
+      <div className="wave-glow"></div>
+      <div className="wave-glow b"></div>
+
+      {/* ─── WAVE RIBBON (CSS gradient代替 since no ribbon.png) ─── */}
+      <div className="wave-wrap" id="wave">
+        <div className="wave-ribbon"></div>
+      </div>
+
+      {/* ─── BG TEXT ─── */}
+      <div className="bg-text" aria-hidden="true">
+        DIPPY&nbsp;ERP
+      </div>
+
+      {/* ─── HERO SECTION ─── */}
       <section className="hero">
         <span className="eyebrow">Every role, one dashboard</span>
 
@@ -300,6 +528,47 @@ export default function Hero() {
           </article>
         </div>
       </section>
-    </>
+
+      {/* ─── FOOTER ROW (social + discover) ─── */}
+      <div className="footer-row">
+        <div className="social">
+          <a href="#" className="social-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 5.8c-.7.3-1.5.6-2.3.7.8-.5 1.5-1.3 1.8-2.2-.8.5-1.7.8-2.6 1-.8-.8-1.9-1.3-3.1-1.3-2.4 0-4.2 1.9-4.2 4.2 0 .3 0 .7.1 1C8 9 4.9 7.3 2.7 4.7c-.4.6-.6 1.3-.6 2.1 0 1.5.7 2.8 1.9 3.5-.7 0-1.3-.2-1.9-.5v.1c0 2 1.4 3.7 3.3 4.1-.3.1-.7.1-1.1.1-.3 0-.5 0-.8-.1.5 1.7 2.1 2.9 4 2.9-1.5 1.1-3.3 1.8-5.3 1.8H1c1.9 1.2 4.2 1.9 6.6 1.9 7.9 0 12.2-6.6 12.2-12.2v-.6c.9-.6 1.6-1.4 2.2-2.3z" />
+            </svg>
+          </a>
+          <a href="#" className="social-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2.4l.6-3H14V8.5c0-.3.2-.5.5-.5z" />
+            </svg>
+          </a>
+          <a href="#" className="social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="1" fill="currentColor" />
+            </svg>
+          </a>
+        </div>
+
+        <a href="#" className="discover">
+          Discover more
+          <span className="arrow-down">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 9 L12 15 L18 9" />
+            </svg>
+          </span>
+        </a>
+
+        <div></div>
+      </div>
+    </div>
   );
 }

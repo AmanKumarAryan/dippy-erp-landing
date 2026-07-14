@@ -236,9 +236,9 @@ export default function Hero() {
       <div className="wave-glow"></div>
       <div className="wave-glow b"></div>
 
-      {/* ─── WAVE RIBBON (CSS gradient代替 since no ribbon.png) ─── */}
+      {/* ─── WAVE RIBBON ─── */}
       <div className="wave-wrap" id="wave">
-        <div className="wave-ribbon"></div>
+        <img src="/ribbon.png" alt="Flowing blue and teal data ribbon" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
       </div>
 
       {/* ─── BG TEXT ─── */}
